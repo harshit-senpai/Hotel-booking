@@ -78,7 +78,7 @@ const Modal: React.FC<ModalProps> = ({
                 <div className="text-lg font-semibold">Login Modal</div>
               </div>
               <div className="relative p-6 flex-auto">{body}</div>
-              <div className="flex flex-row gap-2 p-6">
+              <div className="flex flex-col gap-2 p-6">
                 <div className="flex flex-row items-center gap-4 w-full">
                   {secondaryAction && secondaryActionLabel && (
                     <Button
@@ -95,6 +95,7 @@ const Modal: React.FC<ModalProps> = ({
                     onClick={handleSubmit}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>
