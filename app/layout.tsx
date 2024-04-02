@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Modal from "@/components/modals/Modal";
 import RegisterModal from "@/components/modals/RegisterModal";
 import ToastProvider from "@/Providers/ToastProvider";
+import LoginModal from "@/components/modals/LoginModal";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunito.className}>
         <ToastProvider />
+        <LoginModal />
         <RegisterModal />
         <Navbar />
         {children}
