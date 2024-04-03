@@ -3,6 +3,7 @@ import Container from "../Container";
 import { GiWindmill } from "react-icons/gi";
 import { MdOutlineVilla } from "react-icons/md";
 import CategoryBox from "../CategoryBox";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export const Category = [
   {
@@ -23,19 +24,26 @@ export const Category = [
 ];
 
 const Categories = () => {
+  const params = useSearchParams();
+  const category = params?.get("category");
+  const pathName = usePathname();
+
+  const isMainPage = pathName === "/";
+
+  if (!isMainPage) {
+    return null;
+  }
   return (
     <Container>
       <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
-        {
-            Category.map((item) => (
-                <CategoryBox
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    description={item.description}
-                />
-            ))
-        }
+        {Category.map((item) => (
+          <CategoryBox
+            key={item.label}
+            label={item.label}
+            icon={item.icon}
+            selected={category === item.label}
+          />
+        ))}
       </div>
     </Container>
   );
