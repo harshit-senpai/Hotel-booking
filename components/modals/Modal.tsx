@@ -51,8 +51,10 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const handleSecondaryAction = () => {
-    if (!disabled || !secondaryAction) return;
-
+    console.log(secondaryAction);
+    if (disabled || !secondaryAction) {
+      return;
+    }
     secondaryAction();
   };
 
