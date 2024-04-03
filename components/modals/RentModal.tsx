@@ -2,7 +2,9 @@
 
 import useRentModal from "@/hooks/useRentModal";
 import Modal from "./Modal";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import Heading from "../Heading";
+import { Category } from "../navbar/Categories";
 
 enum STEPS {
   CATEGORY = 0,
@@ -24,21 +26,37 @@ const RentModal = () => {
     setStep((value) => value + 1);
   };
 
-  const actionLabel = () => {
+  const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
       return "Create";
     }
 
     return "Next";
-  };
+  }, [step]);
 
-  const secondaryActionLabel = () => {
+  const secondaryActionLabel = useMemo(() => {
     if (step === STEPS.CATEGORY) {
       return undefined;
     }
 
     return "Back";
-  };
+  }, [step]);
+
+  let bodyContent = (
+    <div className="flex flex-col gap-8">
+      <Heading
+        title="Which of these best describes your place?"
+        subtitle="Pick a category"
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
+        {Category.map((item) => (
+          <div key={item.label} className="col-span-1">
+            {item.label}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   const rentModal = useRentModal();
   return (
@@ -47,7 +65,10 @@ const RentModal = () => {
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
       onSubmit={rentModal.onClose}
-      actionLabel="Submit"
+      actionLabel={actionLabel}
+      secondaryActionLabel={secondaryActionLabel}
+      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
+      body={bodyContent}
     />
   );
 };
