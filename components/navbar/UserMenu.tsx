@@ -20,10 +20,19 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
   };
+
+  const onRent = () => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+  };
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
-        <div className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-natural-100 transition cursor-pointer">
+        <div
+          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-natural-100 transition cursor-pointer"
+          onClick={onRent}
+        >
           Airbnb your home
         </div>
         <div
