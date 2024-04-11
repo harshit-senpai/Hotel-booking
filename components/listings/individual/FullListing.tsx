@@ -9,10 +9,11 @@ import ListingInfo from "./ListingInfo";
 import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
 import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ListingReservation from "./ListingReservation";
+import { Range } from "react-date-range";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -35,20 +36,24 @@ const FullListing: React.FC<FullListingProps> = ({
 }) => {
   const logInModal = useLoginModal();
   const router = useRouter();
-  let dates: Date[] = [];
 
-  const disabledDates = reservations.forEach((reservation) => {
-    const range = eachDayOfInterval({
-      start: new Date(reservation.startDate),
-      end: new Date(reservation.endDate),
+  const disabledDates = useMemo(() => {
+    let dates: Date[] = [];
+
+    reservations.forEach((reservation) => {
+      const range = eachDayOfInterval({
+        start: new Date(reservation.startDate),
+        end: new Date(reservation.endDate),
+      });
+
+      dates = [...dates, ...range];
     });
-
-    dates = [...dates, ...range];
-  });
+    return dates;
+  }, [reservations]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
-  const [dateRange, setDateRange] = useState(initialDateRange);
+  const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const onCreateReservation = () => {
     if (!currentUser) {
