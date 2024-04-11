@@ -1,3 +1,5 @@
+'use server'
+
 import prisma from "@/utils/prismadb";
 
 export default async function getListings() {
