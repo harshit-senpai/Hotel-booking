@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import ListingCard from "../listings/ListingCard";
 
 interface TripsViewProps {
   reservations: SafeReservation[];
@@ -39,7 +40,20 @@ const TripsView: React.FC<TripsViewProps> = ({ reservations, currentUser }) => {
         title="Trips"
         subtitle="Where you.ve been and where you are going"
       />
-      <div className="mt-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8"></div>
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
+        {reservations.map((reservation) => (
+          <ListingCard
+            key={reservation.id}
+            data={reservation.listing}
+            reservation={reservation}
+            actionId={reservation.id}
+            onAction={onCancel}
+            disabled={deletingId === reservation.id}
+            actionLabel="Cancel Reservation"
+            currentUser={currentUser}
+          />
+        ))}
+      </div>
     </Container>
   );
 };

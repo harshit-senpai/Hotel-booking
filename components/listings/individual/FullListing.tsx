@@ -72,7 +72,7 @@ const FullListing: React.FC<FullListingProps> = ({
         toast.success("Listing Reserved");
         setDateRange(initialDateRange);
 
-        router.refresh();
+        router.push("/trips");
       })
       .catch((error) => {
         toast.error("Something went wrong. Please try again.");
