@@ -8,6 +8,8 @@ interface HomeParams {
   searchParams: IListingsProps;
 }
 
+export const dynamic = 'auto';
+
 export default async function Home({ searchParams }: HomeParams) {
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
